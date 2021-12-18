@@ -1,0 +1,70 @@
+{
+  "root": "apps/web-chat",
+  "sourceRoot": "apps/web-chat/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/web-chat",
+        "index": "apps/web-chat/src/index.html",
+        "baseHref": "/",
+        "main": "apps/web-chat/src/main.tsx",
+        "polyfills": "apps/web-chat/src/polyfills.ts",
+        "tsConfig": "apps/web-chat/tsconfig.app.json",
+        "assets": ["apps/web-chat/src/favicon.ico", "apps/web-chat/src/assets"],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/web-chat/src/environments/environment.ts",
+              "with": "apps/web-chat/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "web-chat:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "web-chat:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/web-chat/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/web-chat"],
+      "options": {
+        "jestConfig": "apps/web-chat/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

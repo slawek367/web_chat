@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "web-chat": "apps/web-chat",
+    "web-chat-e2e": "apps/web-chat-e2e"
+  }
+}
