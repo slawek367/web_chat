@@ -12,8 +12,8 @@ export interface SingleChannel {
 export type ChannelList = SingleChannel[];
 
 export interface User {
-  userId: string;
-  name: string;
+  id: string;
+  username: string;
   email: string;
   imageUrl?: string | null;
   lastSeen: Timestamp;

@@ -5,15 +5,16 @@ import { Timestamp } from 'firebase/firestore';
 
 export const useUserDb = () => {
   const createUser = async ({
-    userId,
-    name,
+    id,
+    username,
     email,
     imageUrl = null,
     lastSeen,
   }: User) => {
     try {
-      return await set(ref(db, `users/${userId}`), {
-        username: name,
+      return await set(ref(db, `users/${id}`), {
+        id,
+        username,
         email,
         avatar: imageUrl,
         lastSeen,

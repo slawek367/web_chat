@@ -9,6 +9,7 @@ import { ChatList } from 'components/ChatList';
 import { useUserDb } from 'firebaseConf/hooks';
 import { User as AuthUser } from 'firebase/auth';
 import { useAppContext } from 'state';
+import { Grid, Paper } from '@mui/material';
 
 export const MainPage = () => {
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ export const MainPage = () => {
         const lastSeen = Timestamp.fromDate(new Date());
 
         const newUser = {
-          userId: authUser.uid,
-          name: authUser.displayName as string,
+          id: authUser.uid,
+          username: authUser.displayName as string,
           email: authUser.email as string,
           imageUrl: null,
           lastSeen,
@@ -54,9 +55,13 @@ export const MainPage = () => {
   }
 
   return (
-    <div>
-      <div>Main page {authUser?.displayName}</div>
-      <ChatList data={[]} />
-    </div>
+    <Grid container sx={{ height: '100vh' }}>
+      <Grid item xs={3}>
+        <ChatList data={[]} />
+      </Grid>
+      <Grid item xs={9} height={'100%'}>
+        <Paper>test</Paper>
+      </Grid>
+    </Grid>
   );
 };

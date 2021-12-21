@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -8,17 +8,39 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { ChannelList } from 'types';
 
+import { useSubscribeUserList } from 'firebaseConf/hooks';
+import { ChatListBox } from './ChatListBox';
+import { Box } from '@mui/material';
+
 export const ChatList = ({ data }: { data: ChannelList }) => {
+  const { users, subscribeUserList, unsubscribeUserList } =
+    useSubscribeUserList();
+
+  useEffect(() => {
+    subscribeUserList();
+    return () => unsubscribeUserList();
+  }, []);
+
+  console.log('user list', users);
+
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItem alignItems="flex-start">
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      {Object.values(users).map((user) => (
+        <Box
+          key={user.id}
+          sx={{ borderBottom: 1, borderColor: 'rgba(0, 0, 0, 0.12)' }}
+        >
+          <ChatListBox user={user} />
+        </Box>
+      ))}
+      {/* <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
           primary="Brunch this weekend?"
           secondary={
-            <React.Fragment>
+            <>
               <Typography
                 sx={{ display: 'inline' }}
                 component="span"
@@ -28,7 +50,7 @@ export const ChatList = ({ data }: { data: ChannelList }) => {
                 Ali Connors
               </Typography>
               {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
+            </>
           }
         />
       </ListItem>
@@ -40,7 +62,7 @@ export const ChatList = ({ data }: { data: ChannelList }) => {
         <ListItemText
           primary="Summer BBQ"
           secondary={
-            <React.Fragment>
+            <>
               <Typography
                 sx={{ display: 'inline' }}
                 component="span"
@@ -50,7 +72,7 @@ export const ChatList = ({ data }: { data: ChannelList }) => {
                 to Scott, Alex, Jennifer
               </Typography>
               {" — Wish I could come, but I'm out of town this…"}
-            </React.Fragment>
+            </>
           }
         />
       </ListItem>
@@ -62,7 +84,7 @@ export const ChatList = ({ data }: { data: ChannelList }) => {
         <ListItemText
           primary="Oui Oui"
           secondary={
-            <React.Fragment>
+            <>
               <Typography
                 sx={{ display: 'inline' }}
                 component="span"
@@ -72,10 +94,10 @@ export const ChatList = ({ data }: { data: ChannelList }) => {
                 Sandra Adams
               </Typography>
               {' — Do you have Paris recommendations? Have you ever…'}
-            </React.Fragment>
+            </>
           }
         />
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 };
