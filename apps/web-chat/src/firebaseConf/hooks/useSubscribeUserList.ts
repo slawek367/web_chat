@@ -8,7 +8,6 @@ export const useSubscribeUserList = () => {
   const cancelCallback = useRef<Unsubscribe | null>(null);
 
   const subscribeUserList = useCallback(() => {
-    console.log('subscribe');
     const starCountRef = ref(db, 'users');
     cancelCallback.current = onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
@@ -18,7 +17,6 @@ export const useSubscribeUserList = () => {
 
   const unsubscribeUserList = useCallback(() => {
     cancelCallback.current && cancelCallback.current();
-    console.log('unsubscribe');
   }, []);
 
   return {
