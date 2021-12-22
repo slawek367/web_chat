@@ -18,3 +18,11 @@ export interface User {
   imageUrl?: string | null;
   lastSeen: Timestamp;
 }
+
+export interface Message {
+  from: string;
+  to: string;
+  text: string;
+  sent: Timestamp;
+  seen: Timestamp | null;
+}

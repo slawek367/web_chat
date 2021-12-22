@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Timestamp } from 'firebase/firestore';
@@ -8,14 +8,15 @@ import { Loader } from 'components/Loader';
 import { ChatList } from 'components/ChatList';
 import { useUserDb } from 'firebaseConf/hooks';
 import { User as AuthUser } from 'firebase/auth';
-import { useAppContext } from 'state';
+import { AppContext } from 'state';
 import { Grid, Paper } from '@mui/material';
+import { Chat } from 'components/Chat';
 
 export const MainPage = () => {
   const navigate = useNavigate();
   const { loading, user: authUser } = useAuth();
   const { createUser, getUserById, updateLastSeen } = useUserDb();
-  const { user, setUser, isUserLoading, setUserLoading } = useAppContext();
+  const { user, setUser, isUserLoading, setUserLoading } = useContext(AppContext);
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -57,10 +58,10 @@ export const MainPage = () => {
   return (
     <Grid container sx={{ height: '100vh' }}>
       <Grid item xs={3}>
-        <ChatList data={[]} />
+        <ChatList />
       </Grid>
       <Grid item xs={9} height={'100%'}>
-        <Paper>test</Paper>
+        <Chat />
       </Grid>
     </Grid>
   );
