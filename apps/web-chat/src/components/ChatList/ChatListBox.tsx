@@ -17,7 +17,6 @@ export const ChatListBox = ({
   onClick: (user: User) => void;
   messages: Message[];
 }) => {
-  console.log('msgs', messages);
   const lastMessage = messages[messages.length - 1]?.text || '';
 
   return (
@@ -35,6 +34,7 @@ export const ChatListBox = ({
             {lastMessage && ` - ${lastMessage}`}
           </>
         }
+        sx={{ overflow: 'hidden' }}
       />
     </ListItemButton>
   );
