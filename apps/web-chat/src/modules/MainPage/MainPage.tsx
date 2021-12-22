@@ -34,8 +34,8 @@ export const MainPage = () => {
 
         const newUser = {
           id: authUser.uid,
-          username: authUser.displayName as string,
-          email: authUser.email as string,
+          username: authUser.displayName || 'display name not provided',
+          email: authUser.email || 'email not provided',
           imageUrl: null,
           lastSeen,
         };
