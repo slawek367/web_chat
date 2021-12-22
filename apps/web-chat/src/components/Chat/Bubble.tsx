@@ -33,8 +33,8 @@ export const Bubble = ({ text, myMessage = false, date }: { text: string; myMess
       <BubbleBox
         sx={{
           background: myMessage
-            ? 'linear-gradient(353deg, #90b3ffc7, #d1d1d1)'
-            : 'linear-gradient(353deg, #3affc8c7, #fafaff)',
+            ? 'linear-gradient(178deg, #ff000000, #005dff17)'
+            : 'linear-gradient(178deg, #bfff0000, #00839f14)',
         }}
       >
         <TextBox>{text}</TextBox>
