@@ -56,7 +56,7 @@ export const MainPage = () => {
   }
 
   return (
-    <Grid container sx={{ height: '100vh' }}>
+    <Grid container sx={{ maxHeight: 'calc(100vh - 50px)' }}>
       <Grid item xs={3}>
         <ChatList />
       </Grid>

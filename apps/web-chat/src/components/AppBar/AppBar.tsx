@@ -20,9 +20,7 @@ const pages = [
 ];
 
 export const AppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<HTMLElement | null>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = React.useState<HTMLElement | null>(null);
   const navigate = useNavigate();
   const { logout, user } = useAuth();
 
@@ -36,19 +34,10 @@ export const AppBar = () => {
   };
 
   return (
-    <MuiAppBar
-      position="static"
-      className={'appBar'}
-      sx={{ bgcolor: 'primary.light' }}
-    >
+    <MuiAppBar position="static" className={'appBar'} sx={{ bgcolor: 'primary.light' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             Web chat
           </Typography>
 
@@ -88,12 +77,7 @@ export const AppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             Web chat
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -108,10 +92,7 @@ export const AppBar = () => {
             ))}
           </Box>
           {user && (
-            <Button
-              onClick={logout}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
+            <Button onClick={logout} sx={{ my: 2, color: 'white', display: 'block' }}>
               Logout
             </Button>
           )}
