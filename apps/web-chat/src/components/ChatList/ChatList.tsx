@@ -24,7 +24,7 @@ export const ChatList = () => {
   };
 
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: '70vh', overflow: 'auto' }}>
       {Object.values(users).map((user) => (
         <Box key={user.id} sx={{ borderBottom: 1, borderColor: 'rgba(0, 0, 0, 0.12)' }}>
           <ChatListBox user={user} onClick={onClick} messages={messages[user.id] || []} />

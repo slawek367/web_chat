@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, useMemo } from 'react';
 import { Button, Fab, Grid, Paper, TextField, Divider, Alert } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { AppContext } from 'state';
@@ -23,23 +23,21 @@ export const Chat = () => {
   const partnerId = searchParams.get('partnerId');
   const partnerName = searchParams.get('partnerName');
 
+  const channelMessages = messages[partnerId || ''] || [];
+
   useEffect(() => {
     subscribeChat();
     return () => unsubscribeChat();
   }, []);
 
-  if (!currentUserId || !partnerId) {
-    return (
-      <Alert icon={false} severity="warning" sx={{ width: '100%' }}>
-        Please select user to start chat
-      </Alert>
-    );
-  }
-
-  const channelMessages = messages[partnerId] || [];
+  useEffect(() => {
+    if (scrollRef.current) {
+      (scrollRef.current as any).scrollIntoView({ behaviour: 'smooth' });
+    }
+  }, [channelMessages]);
 
   const sendMsg = () => {
-    if (!text.length) {
+    if (!text.length || !currentUserId || !partnerId) {
       return;
     }
     const message: Message = {
@@ -53,11 +51,13 @@ export const Chat = () => {
     setText('');
   };
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      (scrollRef.current as any).scrollIntoView({ behaviour: 'smooth' });
-    }
-  }, [channelMessages]);
+  if (!currentUserId || !partnerId) {
+    return (
+      <Alert icon={false} severity="warning" sx={{ width: '100%' }}>
+        Please select user to start chat
+      </Alert>
+    );
+  }
 
   return (
     <Grid container>
@@ -67,8 +67,8 @@ export const Chat = () => {
       <List sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: '70vh', overflow: 'auto' }}>
         {channelMessages
           .sort((a, b) => a.sent.seconds - b.sent.seconds)
-          .map((msg) => (
-            <Bubble text={msg.text} myMessage={msg.from === currentUserId} date={msg.sent} />
+          .map((msg, idx) => (
+            <Bubble text={msg.text} myMessage={msg.from === currentUserId} date={msg.sent} key={idx} />
           ))}
         <span ref={scrollRef}></span>
       </List>

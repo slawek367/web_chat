@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Timestamp } from 'firebase/firestore';
@@ -17,12 +17,13 @@ export const MainPage = () => {
   const { loading, user: authUser } = useAuth();
   const { createUser, getUserById, updateLastSeen } = useUserDb();
   const { user, setUser, isUserLoading, setUserLoading } = useContext(AppContext);
+  const interval = useRef<any>(null);
 
   useEffect(() => {
     if (!loading && !authUser) {
       navigate('/login');
     }
-  }, [authUser]);
+  }, [loading, authUser]);
 
   useEffect(() => {
     const checkUser = async (authUser: AuthUser) => {
@@ -45,10 +46,16 @@ export const MainPage = () => {
         setUser(dbUser);
       }
       setUserLoading(false);
+      interval.current = setInterval(() => {
+        updateLastSeen(authUser.uid);
+      }, 30000);
     };
     if (authUser) {
       checkUser(authUser);
     }
+    return () => {
+      interval.current && clearInterval(interval.current);
+    };
   }, [authUser]);
 
   if (loading || isUserLoading) {
@@ -57,10 +64,10 @@ export const MainPage = () => {
 
   return (
     <Grid container sx={{ maxHeight: 'calc(100vh - 50px)' }}>
-      <Grid item xs={3}>
+      <Grid item xs={12} md={3}>
         <ChatList />
       </Grid>
-      <Grid item xs={9} height={'100%'}>
+      <Grid item xs={12} md={9} height={'100%'}>
         <Chat />
       </Grid>
     </Grid>
